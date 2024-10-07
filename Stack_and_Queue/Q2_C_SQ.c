@@ -114,6 +114,14 @@ int main()
 void createStackFromLinkedList(LinkedList *ll, Stack *s)
 {
     /* add your code here */
+	if (!isEmptyStack(s)) //스택이 비어있지 않다면 
+		removeAllItemsFromStack(s); //삭제 (함수는 반복 실행 가능하기에)
+	while (ll->head != NULL)
+	{
+		push(s, findNode(ll, 0)->item);
+		removeNode(ll, 0);
+	}
+
 }
 
 void removeEvenValues(Stack *s)
