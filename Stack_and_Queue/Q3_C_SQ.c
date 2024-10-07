@@ -104,6 +104,38 @@ int main()
 int isStackPairwiseConsecutive(Stack *s)
 {
   /* add your code here */
+  int flag = 0;
+  int is_first_flag = 1;
+  if ((s->ll).size % 2 == 1 || (s->ll).size == 0) //size가 홀수인 경우 : pairwise consecutive가 불가능 0인 경우 : 아마 아닐듯
+  {
+	return flag;
+  }
+  else
+  {
+	int temp = 0;
+	int temp2 = 0;
+	
+	while ((s->ll).size != 0)
+	{
+		if (is_first_flag == 1) //새로 쌍을 찾을 경우
+		{
+			temp = pop(s);
+			is_first_flag = 0;
+		}
+		else //비교해야 할 숫자가 채워진 경우
+		{
+			temp2 = pop(s);
+			if ((temp - temp2 != 1) && (temp - temp2 != -1))
+			{
+				return flag;
+			}
+			temp = 0;
+			is_first_flag = 1;
+		}
+	}
+	flag = 1;
+	return flag;
+  }
 }
 
 //////////////////////////////////////////////////////////////////////////////////
