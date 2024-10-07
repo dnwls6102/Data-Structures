@@ -87,6 +87,33 @@ int main()
 void moveOddItemsToBack(LinkedList *ll)
 {
 	/* add your code here */
+	ListNode * last = ll->head; 
+	LinkedList templ;
+	templ.head = NULL;
+	templ.size = 0;
+
+	int idx = 0;
+	int oddnum = 0;
+	while (last != NULL)
+	{
+		if (last -> item % 2 == 1) //홀수면
+		{
+			last = last->next; //마지막 원소까지 이동
+			insertNode(&templ, oddnum, findNode(ll, idx)->item); //다른 list에 홀수 삽입
+			removeNode(ll, idx); //원본 리스트에서 해당 원소 삭제
+			oddnum += 1;
+			continue;
+		}
+		last = last->next; //마지막 원소까지 이동
+		idx += 1;
+	}
+
+	while (templ.size != 0)
+	{
+		insertNode(ll, ll->size, findNode(&templ, 0) -> item); //홀수 list의 0번 인덱스 원소를 ll의 끝에 삽입
+		removeNode(&templ, 0); //홀수 list에서 0번 인덱스 원소 삭제
+	}
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

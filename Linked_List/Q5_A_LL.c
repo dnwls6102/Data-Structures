@@ -39,6 +39,7 @@ int removeNode(LinkedList *ll, int index);
 int main()
 {
 	int c, i;
+	c = -1;
 	LinkedList ll;
 	LinkedList resultFrontList, resultBackList;
 
@@ -103,6 +104,27 @@ int main()
 void frontBackSplitLinkedList(LinkedList *ll, LinkedList *resultFrontList, LinkedList *resultBackList)
 {
 	/* add your code here */
+	int front_size = (int)(ll->size / 2);
+	int temp_count = 0;
+	int item = 0;
+
+	while (!(temp_count > front_size) && front_size != 0){
+		item = findNode(ll, 0) -> item;
+		insertNode(resultFrontList, temp_count, item); //원본 list의 0번 인덱스 원소를 계속 빼기
+		removeNode(ll, 0); //원본 list의 0번 인덱스 원소 삭제
+		temp_count += 1;
+	}
+
+	temp_count = 0;
+
+	while (ll->head != NULL) { //원본 list의 head 원소가 NULL이 아닐때까지
+		item = findNode(ll, 0) -> item;
+		insertNode(resultBackList, temp_count, item);
+		removeNode(ll, 0);
+		temp_count += 1;
+	}
+
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

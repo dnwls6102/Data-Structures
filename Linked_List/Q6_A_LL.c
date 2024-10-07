@@ -88,7 +88,42 @@ int main()
 
 int moveMaxToFront(ListNode **ptrHead)
 {
+	//LinkedList의 0번째 원소의 포인터의 포인터를 매개변수로 받아옴
+	//단순히 최댓값 노드를 뽑아오기만 하는것이 아니라, 최댓값 노드의 이전 노드와 최댓값 노드의 다음 노드를 연결시켜야 함
+	//반복문을 돌면서 temp 노드와 temp 노드의 이전 노드를 모두 저장시켜야 함
     /* add your code here */
+	ListNode *temp = *ptrHead;
+	ListNode *front = NULL;
+	ListNode *max_node = NULL;
+	ListNode *max_front_node = NULL;
+	int max_item = -2147483648; //math.h의 -INFINITY를 사용하면 자료형 차이에 따른 overflow발생
+
+	while (temp != NULL){
+		if (temp -> item > max_item)
+		{
+			max_front_node = front;
+			max_item = temp -> item;
+			max_node = temp;
+		}
+		front = temp;
+		temp = temp -> next;
+		
+	}
+
+	if (max_node == NULL) //max_node가 NULL인 경우 : 리스트에 원소가 없거나 잘못 작동함
+		return 0;
+	else if (max_front_node == NULL) //정상 작동하였으나 max_front_node가 NULL인 경우 : 가장 큰 원소가 맨 앞에 있음
+		return 0;
+	else
+	{
+		//max_node 이전 노드와 max_node 다음 노드끼리 연결시키는 작업 먼저 하기
+		max_front_node -> next = max_node -> next;
+		//max_node를 앞으로 보내기
+		max_node -> next = *ptrHead;
+		*ptrHead = max_node;
+		return 0;
+	}
+
 }
 
 //////////////////////////////////////////////////////////////////////////////////

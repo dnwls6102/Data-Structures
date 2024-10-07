@@ -88,6 +88,43 @@ int main()
 void RecursiveReverse(ListNode **ptrHead)
 {
 	/* add your code here */
+	//ptrHead를 next가 NULL이 될때까지 돌려주고, next = NULL이 나오면 그 노드의 주소를 저장
+	//저장한 노드를 만날때까지
+	//첫 번째 노드를 linked_list의 마지막 노드 다음으로 보내는 작업을 반복하기
+
+	ListNode* temp = *ptrHead;
+	ListNode* front = NULL;
+	ListNode* original_first_node = *ptrHead;
+	ListNode* cur;
+
+
+	if (temp == NULL) //리스트에 어떠한 원소도 없다면
+		return; //바로 return
+
+	while (1)
+	{
+		if (temp == original_first_node)
+		{
+			front = temp;
+			temp = temp -> next;
+			if (temp == NULL) //LinkedList에 단 하나의 원소만 있다면
+				return; //함수 반환
+			front -> next = NULL;
+			continue;
+		}
+		*ptrHead = temp; //LinkedList의 Head로 설정
+		if (temp -> next != NULL) //temp가 원본 리스트의 마지막 노드가 아니라면
+			temp = temp -> next; // temp 반복인자는 다음 노드로 이동
+		else
+			break;
+		(*ptrHead) -> next = front; //Head의 next를 현재 반복인자의 이전 노드로 설정
+		front = *ptrHead; //현재 반복인자의 이전 노드를 Head로 설정
+
+	}
+	(*ptrHead) -> next = front; //Head의 next를 현재 반복인자의 이전 노드로 설정
+	front = *ptrHead; //현재 반복인자의 이전 노드를 Head로 설정
+
+
 }
 
 //////////////////////////////////////////////////////////////////////////////////
