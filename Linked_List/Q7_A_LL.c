@@ -115,8 +115,8 @@ void RecursiveReverse(ListNode **ptrHead)
 		*ptrHead = temp; //LinkedList의 Head로 설정
 		if (temp -> next != NULL) //temp가 원본 리스트의 마지막 노드가 아니라면
 			temp = temp -> next; // temp 반복인자는 다음 노드로 이동
-		else
-			break;
+		else //마지막 노드가 맞다면
+			break; //반복문을 멈추고 한 번만 작업시키기
 		(*ptrHead) -> next = front; //Head의 next를 현재 반복인자의 이전 노드로 설정
 		front = *ptrHead; //현재 반복인자의 이전 노드를 Head로 설정
 
