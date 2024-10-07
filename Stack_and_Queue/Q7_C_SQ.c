@@ -104,7 +104,69 @@ int main()
 ////////////////////////////////////////////////////////////
 int balanced(char *expression)
 {
-/* add your code here */
+	/* add your code here */
+	//소괄호 : 1 중괄호 : 2 대괄호 : 3
+	Stack *s = malloc(sizeof(Stack));
+	int count = 0;
+	while (expression[count] != '\0')
+	{
+		if (expression[count] == '(')
+		{
+			push(s, 1);
+		}
+		else if (expression[count] == '{')
+		{
+			push(s, 2);
+		}
+		else if (expression[count] == '[')
+		{
+			push(s, 3);
+		}
+		else
+		{
+			if (isEmptyStack(s)) //스택이 비어있는데 닫는 괄호가 나왔다면 (닫는 괄호가 더 많다는 의미)
+				return 1;
+			else if (expression[count] == ')') //닫는 소괄호가 나왔다면
+			{
+				if (peek(s) == 1) //짝이 맞는 경우
+				{
+					pop(s); //pop
+				}
+				else
+				{
+					return 1;
+				}
+			}
+			else if (expression[count] == '}') //닫는 중괄호가 나왔다면
+			{
+				if (peek(s) == 2) //짝이 맞는 경우
+				{
+					pop(s); //pop
+				}
+				else
+				{
+					return 1;
+				}
+			}
+			else if (expression[count] == ']') //닫는 대괄호가 나왔다면
+			{
+				if (peek(s) == 3) //짝이 맞는 경우
+				{
+					pop(s); //pop
+				}
+				else
+				{
+					return 1;
+				}
+			}
+		} 
+		count += 1;
+	}
+	if (!isEmptyStack(s)) //스택에 아직 원소가 남아있다면 (아직 처리되지 못한 여는 괄호가 남았다는 의미)
+		return 1;
+	else
+		return 0;
+	
 }
 
 ////////////////////////////////////////////////////////////
