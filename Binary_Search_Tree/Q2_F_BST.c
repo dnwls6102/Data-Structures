@@ -72,6 +72,7 @@ int main()
 			printf("The resulting in-order traversal of the binary search tree is: ");
 			inOrderTraversal(root); // You need to code this function
 			printf("\n");
+			removeAll(&root);
 			break;
 		case 0:
 			removeAll(&root);
@@ -91,6 +92,29 @@ int main()
 void inOrderTraversal(BSTNode *root)
 {
 	 /* add your code here */
+	 //스택을 활용한 이진 탐색 트리 중위 순회
+	 
+	if (root == NULL)
+	 	return;
+	Stack *s = malloc(sizeof(Stack));
+	s->top = NULL;
+
+	BSTNode * temp = root;
+	
+	while (1)
+	{
+		while(temp != NULL)
+		{
+			push(s, temp);
+			temp = temp -> left;
+		}
+		temp = pop(s);
+		if (!temp) break;
+		printf("%d ", temp->item);
+		temp = temp -> right;
+
+	}
+	free(s);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
