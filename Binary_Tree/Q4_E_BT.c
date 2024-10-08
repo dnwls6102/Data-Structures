@@ -104,6 +104,22 @@ int sumOfOddNodes(BTNode *node)
 
 {
     /* add your code here */
+    //재귀를 통한 완전 탐색으로 홀수 노드 찾아서 더해주기
+    if (node == NULL)
+        return 0;
+    else
+    {
+        int left = sumOfOddNodes(node -> left);
+        int right = sumOfOddNodes(node -> right);
+        if ((node -> item) % 2 == 1)
+        {
+            return left + right + node->item;
+        }
+        else
+        {
+            return left + right;
+        }
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////////////

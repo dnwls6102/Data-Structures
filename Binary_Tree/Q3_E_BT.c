@@ -101,7 +101,24 @@ int main()
 int countOneChildNodes(BTNode *node)
 
 {
-    /* add your code here */
+    //조사하는 node가 NULL이라면
+    if (node == NULL)
+        return 0;
+    printf("현재 노드 : %d\n", node->item);
+    // 재귀를 통한 풀이
+
+    // 조사하는 노드가 왼/오 둘 중 하나에만 자식이 있고, 그 자식이 단말 노드인 경우
+    if ((node -> left == NULL && node -> right != NULL && node -> right -> left == NULL && node -> right -> right == NULL) || (node -> left != NULL && node -> left -> left == NULL && node -> left -> right == NULL && node -> right == NULL))
+    {
+        return 1;
+    }
+    else
+    {
+        int left = countOneChildNodes(node -> left);
+        int right = countOneChildNodes(node -> right);
+
+        return left + right;
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
