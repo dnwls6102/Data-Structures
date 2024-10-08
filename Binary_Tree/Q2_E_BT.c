@@ -102,8 +102,13 @@ int maxHeight(BTNode *node)
     if (node == NULL) //주어진 BTNode가 NULL이면
         return -1; //빈 노드이니 -1반환
     // 재귀를 통한 완전탐색
+    else
+    {
+        int left_one = maxHeight(node->left);
+        int right_one = maxHeight(node->right);
     
-    return max(maxHeight(node->left), maxHeight(node->right)) + 1;
+        return (left_one > right_one) ? (left_one + 1) : (right_one + 1);
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
