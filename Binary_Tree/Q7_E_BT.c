@@ -103,6 +103,27 @@ int main()
 int smallestValue(BTNode *node)
 {
 	/* add your code here */
+    if (node == NULL)
+        return 0;
+    //재귀를 통한 완전 탐색으로 가장 작은 값 찾기 (이진 탐색 트리가 아니기에 달리 방법이 없음)
+    if (node -> left == NULL && node -> right == NULL)
+        return node -> item;
+    else
+    {
+        //왼쪽 자식 오른쪽 자식 중 작은것을 먼저 찾은 후 부모 노드와 또 비교
+        int left = smallestValue(node -> left);
+        int right = smallestValue(node -> right);
+
+        if (left > right)
+        {
+            return (right < node -> item) ? right : node -> item;
+        }
+        else
+        {
+            return (left < node -> item) ? left : node -> item;
+        }
+    }
+
 }
 
 //////////////////////////////////////////////////////////////////////////////////

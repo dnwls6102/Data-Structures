@@ -106,6 +106,18 @@ int main()
 void printSmallerValues(BTNode *node, int m)
 {
 	/* add your code here */
+    //재귀를 통한 완전 탐색으로 입력받은 값보다 작은 값들을 더하기
+    if (node == NULL)
+        return;
+    else
+    {
+        if (node -> item < m)
+        {
+            printf("%d ", node -> item);
+        }
+        printSmallerValues(node -> left ,m);
+        printSmallerValues(node -> right ,m);
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////////////
