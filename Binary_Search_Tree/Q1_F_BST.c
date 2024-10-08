@@ -93,8 +93,38 @@ int main()
 
 void levelOrderTraversal(BSTNode* root)
 {
-
     /* add your code here */
+	//queue를 활용한 완전탐색 : BFS
+	//node를 만나면 출력 후 해당 노드의 자식을 왼쪽 자식부터 queue에 넣는다
+	//이후 dequeue를 하고 해당 노드로 넘어가 출력, queue가 빌때까지 반복한다
+
+	if (root == NULL)
+		return;
+
+	Queue *q = malloc(sizeof(Queue));
+	q -> head = NULL;
+	q -> tail = NULL;
+
+	BSTNode* temp;
+	enqueue(&(q->head), &(q->tail), root);
+
+	while (!isEmpty(q->head))
+	{
+		
+		temp = dequeue(&(q->head), &(q->tail));
+		printf("%d ",temp->item);
+		if (temp -> left == NULL && temp -> right == NULL)
+		{
+			continue;
+		}
+		else
+		{
+			if (temp -> left != NULL)
+				enqueue(&(q->head), &(q->tail), temp -> left);
+			if (temp -> right != NULL)
+				enqueue(&(q->head), &(q->tail), temp -> right);
+		}
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
