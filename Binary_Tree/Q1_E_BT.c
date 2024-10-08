@@ -117,6 +117,91 @@ int identical(BTNode *tree1, BTNode *tree2)
 
 {
    /* add your code here */
+   BTNode * temp1 = tree1; //temp1에 1번 트리의 루트 노드 포인터 저장
+   BTNode * temp2 = tree2; //temp2에 2번 트리의 루트 노드 포인터 저장
+   BTNode * top1;
+   BTNode * top2;
+   Stack * s1 = malloc(sizeof(Stack)); //1번 트리 탐색 전용 스택 선언
+   Stack * s2 = malloc(sizeof(Stack)); //2번 트리 탐색 전용 스택 선언
+   s1->top = NULL;
+   s2->top = NULL;
+
+   //현재 1번 트리의 중앙 노드와 2번 트리의 중앙 노드를 스택에 저장
+   push(s1, temp1);
+   push(s2, temp2);
+
+   while (temp1 != NULL || temp2 != NULL)
+   {
+    if (temp1 -> item != temp2 -> item) //현재 temp1에 담긴 값과 temp2에 담긴 값이 다르다면
+        return 0; //FALSE
+
+    if (temp1 -> left != NULL) //temp1의 왼쪽 노드가 NULL이 아니라면
+    {
+        if (temp2 -> left == NULL) //temp2의 왼쪽 노드는 NULL이라면
+            return 0; //FALSE
+        //현재 노드 top으로 잠시 이관
+        top1 = temp1;
+        top2 = temp2;
+        //왼쪽으로 이동시키기
+        temp1 = temp1 -> left;
+        temp2 = temp2 -> left; 
+        //현재 1번 트리의 중앙 노드와 2번 트리의 중앙 노드를 스택에 저장
+        push(s1, temp1);
+        push(s2, temp2);
+        //왼쪽 방문 처리(NULL로 만들기)
+        top1 -> left = NULL;
+        top2 -> left = NULL;
+    }
+    else if (temp1 -> left == NULL && temp1 -> right != NULL) //왼쪽 노드는 NULL인데 오른쪽 노드는 NULL이 아니라면
+    {
+        if (!(temp2 -> left == NULL && temp2 -> right != NULL)) //오른쪽 노드는 다른 상황이라면
+            return 0; //FALSE
+        //각각 스택에서 pop시키기 : 만약 두 값이 서로 다르면 FALSE
+        top1 = pop(s1);
+        top2 = pop(s2);
+
+        if (top1 -> item != top2 -> item)
+            return 0;
+        
+        //top 변수들에 temp 포인터들을 저장
+        top1 = temp1;
+        top2 = temp2;
+        temp1 = temp1 -> right; //오른쪽으로 이동
+        temp2 = temp2 -> right; //오른쪽으로 이동
+        //현재 1번 트리의 중앙 노드와 2번 트리의 중앙 노드를 스택에 저장
+        push(s1, temp1);
+        push(s2, temp2);
+        top1 -> right = NULL; //오른쪽 노드 NULL처리 (=방문 완료 처리)
+        top2 -> right = NULL;
+        
+    }
+    else if (temp1 -> left == NULL && temp1 -> right == NULL) //단말 노드라면 (양쪽 다 NULL이라면)
+    {
+        if (!(temp2 -> left == NULL && temp2 -> right == NULL)) //오른쪽 노드는 다른 상황이라면
+            return 0;
+        //중앙 노드 pop하기
+        top1 = pop(s1);
+        top2 = pop(s2);
+        if (top1 -> item != top2 -> item)
+            return 0;
+        //temp 노드들을 stack의 top 노드로 이동시키기 : 마지막 노드를 탐색했을 때 메모리 참조 오류 발생
+        if (s1->top == NULL || s2->top == NULL) //스택에 node가 안남아있다면
+        {
+            break;
+        }
+        else //남아있다면 (한 쪽만 남아있는 상황은 발생할 수 없음. 위 쪽의 조건문들을 통해 다 걸렀기 때문)
+        {
+            //기존 pop함수가 스택이 비어있을 시 쓰레기 값을 반환함 : 스택 선언할 때 top을 NULL로 해줘야...
+            temp1 = s1->top->btnode;
+            temp2 = s2->top->btnode;
+        }
+        
+    }
+
+   }
+
+   return 1;
+
 }
 
 /////////////////////////////////////////////////////////////////////////////////
