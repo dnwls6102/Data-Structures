@@ -111,6 +111,7 @@ void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2)
 		cur = cur -> next;
 		temp = findNode(ll2, 0);
 		insertNode(ll1, idx, temp->item);
+		idx += 2;
 		removeNode(ll2, 0);
 	}
 }
