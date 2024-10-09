@@ -92,6 +92,45 @@ int main()
 void postOrderIterativeS2(BSTNode *root)
 {
 	 /* add your code here */
+	 //스택 2개를 활용한 후위 순회 구현
+	 //처음 root 노드를 s2 스택에 넣은 후
+	 //1. s2 스택의 원소를 pop한 후 s1 스택에 옮기기
+	 //2. 만약 pop한 원소가 자식이 있다면 왼쪽 자식 -> 오른쪽 자식 순으로 s2에 push하고
+	 //3. 자식이 없다면 그냥 넘어감
+	 //1~3을 s2 스택이 빌때까지 반복
+	 //반복이 끝나면 s1 스택을 빌때까지 pop한 후 출력하면 완료
+
+	 if (root == NULL)
+	 	return;
+	Stack s1;
+	Stack s2;
+	s1.top = NULL;
+	s2.top = NULL;
+	BSTNode * temp;
+
+	push(&s2, root);
+
+	while(!isEmpty(&s2))
+	{
+		temp = pop(&s2);
+		push(&s1, temp);
+		if (temp -> left != NULL || temp -> right != NULL) //자식이 있으면
+		{
+			if (temp -> left != NULL)
+				push(&s2, temp -> left);
+			if (temp -> right != NULL)
+				push(&s2, temp -> right);
+		}
+		else //자식이 없으면
+		{
+			continue;
+		}
+	}
+
+	while(!isEmpty(&s1))
+	{
+		printf("%d ", pop(&s1) -> item);
+	}
 }
 
 /* Given a binary search tree and a key, this function
