@@ -92,6 +92,47 @@ int main()
 void postOrderIterativeS1(BSTNode *root)
 {
 	 /* add your code here */
+	  //스택을 활용한 이진 탐색 트리 후위 순회
+	//stack에 오->왼 자식 순서로 push, 이후 현재 노드의 left right를 NULL로 만들어서 방문 처리
+	//한 번 실행하면 루트를 제외한 모든 노드가 초기화됨
+	 //참고 : https://blog.naver.com/sunkwang0307/221543896967
+	 
+	if (root == NULL)
+	 	return;
+	Stack *s = malloc(sizeof(Stack));
+	s->top = NULL;
+
+	BSTNode * temp = root;
+	BSTNode * cut;
+
+	push(s, temp);
+
+	while (!isEmpty(s))
+	{
+		while(temp->left != NULL || temp->right != NULL)
+		{
+			if(temp->right != NULL)
+				push(s, temp -> right);
+			if(temp->left != NULL)
+				push(s, temp -> left);
+			cut = temp;
+			if(temp->left != NULL)
+				temp = temp -> left;
+			cut -> left = NULL;
+			cut -> right = NULL;
+		}
+		if (peek(s)->left != NULL || peek(s)->right != NULL)
+		{
+			temp = peek(s);
+			continue;
+		} 
+		temp = pop(s);
+		printf("%d ", temp->item);
+		// if(temp->right != NULL)
+		// 	temp = temp -> right;
+
+	}
+	free(s);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
