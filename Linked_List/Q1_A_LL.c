@@ -91,9 +91,11 @@ int main()
 int insertSortedLL(LinkedList *ll, int item)
 {
 	/* add your code here */
+	//노드 공간을 확보하기 위한 malloc
 	ListNode *temp = malloc(sizeof(ListNode));
 	temp -> item = item;
 
+	//linkedlist에 원소가 없으면 별도로 처리
 	if (ll -> size == 0) {
 		ll -> head = temp;
 		temp -> next = NULL;
@@ -101,33 +103,42 @@ int insertSortedLL(LinkedList *ll, int item)
 		return ll -> size - 1;
 	}
 	
+	//연결 리스트를 타고 타고 넘어가며 삽입할 노드와 비교할 포인터 선언
 	ListNode *cur = ll -> head;
+	//노드를 삽입할 때, 삽입할 위치의 앞에 있는 노드의 주소값을 임시로 저장할 포인터 선언
 	ListNode * tt;
+	//인덱스를 세기 위한 count 변수 선언
 	int index_count = 0;
+
+	//cur가 Null이 아닐때까지(cur가 null이면 리스트의 끝에 도달했다는 의미)
 	while ((cur != NULL)) {
 		
+		//삽입할 노드의 item값이 비교하는 노드의 item값보다 작으면 (= 삽입)
 		if ((temp -> item) < (cur->item)) 
-		{
+		{	
+			//삽입 위치가 맨 앞이면
 			if (index_count == 0)
 			{
 				temp -> next = cur;
 				ll -> head = temp;
 				ll -> size += 1;
 			}
+			//그 이외의 경우
 			else
 			{
 				tt -> next = temp;
 				temp -> next = cur;
 				ll -> size += 1;
 			}
-			
+			//삽입한 위치의 index 반환
 			return index_count;
 		}
+		//만약 값이 같다면 : 삽입을 진행하지 않고 바로 -1 반환
 		else if ((temp -> item) == (cur->item))
 		{
-			printf("condition enter\n");
 			return -1;
 		}
+		//그 외 : cur 함수를 이동시키고, 연결 진행
 		else
 		{	
 			tt = cur;
@@ -135,6 +146,7 @@ int insertSortedLL(LinkedList *ll, int item)
 			index_count += 1;
 		}
 	}
+	//만약 리스트 끝까지 다다랐을 때 마땅한 위치를 찾지 못했다면 : 마지막에 삽입
 	if (cur== NULL) {
 		tt -> next = temp;
 		temp -> next = NULL;

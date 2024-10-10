@@ -104,9 +104,14 @@ int main()
 void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2)
 {
     /* add your code here */
+	//cur 포인터 : 삽입할 노드 바로 다음에 위치할 포인터
 	ListNode * cur = ll1->head;
+	//2번 리스트에서 뽑아온 원소를 저장할 포인터
 	ListNode * temp;
+	//인덱스 값 : 2번 리스트의 원소들은 1번 리스트의 홀수번째 인덱스에만 삽입됨
 	int idx = 1;
+	//cur 포인터가 NULL이 되거나(1번 리스트에 더 이상 삽입할 위치가 없는 경우)
+	//2번 리스트에 더 이상 원소가 남아있지 않다면 반복 종료
 	while (cur != NULL || ll2 -> size != 0){
 		cur = cur -> next;
 		temp = findNode(ll2, 0);
